@@ -41,6 +41,10 @@
     grid-area: 4 / 1 / 5 / 5; 
   }
 
-
+img {
+  max-width: 300px;
+  object-fit: contain;
+  
+}
 
 

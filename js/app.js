@@ -24,7 +24,7 @@ let img3 = document.getElementById('img3');
 
 
 let matchupTotal = 0;
-const matchupAllowed = 5;
+const matchupAllowed = 25;
 
 let allProducts = [];
 

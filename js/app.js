@@ -63,7 +63,7 @@ function checkForDuplicates(array) {
 
 function OddDuckProduct(name, fileExtension = 'jpg') {
   this.name = name;
-  this.src = `../img/${name}.${fileExtension}`;
+  this.src = `img/${name}.${fileExtension}`;
   this.views = 0;
   this.likes = 0;
 

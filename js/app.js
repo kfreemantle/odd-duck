@@ -224,7 +224,9 @@ function renderChart() {
       {
         label: '# of Votes',
         data: productLikes,
-        borderWidth: 1,
+        borderWidth: 2,
+        borderColor: 'rgba(179, 57, 14, 0.96)',
+        hoverBackgroundColor: 'rgba(21, 47, 217, 0.96)',
         backgroundColor: [ 
         'rgba(253, 187, 39, 0.5)',
         'rgba(10, 249, 187, 0.9)',

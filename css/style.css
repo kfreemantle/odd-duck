@@ -26,12 +26,20 @@
     
   }
 
-  .div3 { 
+  #div3 { 
+  
     height: 900px;
     border: 2px solid blue;
     grid-area: 2 / 2 / 4 / 5; 
   }
 
+  #imagesContainer {
+    display: flex;
+    justify-content: space-between;
+    
+  }
+
+  
   .div3 img {
     max-width: 300px;
   }

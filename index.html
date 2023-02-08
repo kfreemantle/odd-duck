@@ -38,9 +38,11 @@
       </div>
 
       <div id="div3">
-        <img id="img1" src="" alt="">
-        <img id="img2" src="" alt="">
-        <img id="img3" src="" alt="">
+        <div id="imagesContainer">
+          <img id="img1" src="" alt="">
+          <img id="img2" src="" alt="">
+          <img id="img3" src="" alt="">
+        </div>
         <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, harum rem hic, quaerat doloremque
           deserunt illum, placeat ipsum eos nesciunt numquam suscipit. Voluptatum facere rem aliquam ipsa illum
           necessitatibus distinctio.
@@ -53,9 +55,17 @@
 
       </div>
 
-      <div class="div4"> </div>
+      <div class="canvasContainer">
+        <canvas id="myChart">
+
+        </canvas>    
+      </div>
     </div>
   </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
+<!--   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.0/chart.min.js" integrity="sha512-qKyIokLnyh6oSnWsc5h21uwMAQtljqMZZT17CIMXuCQNIfFSFF4tJdMOaJHL9fQdJUANid6OB6DRR0zdHrbWAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>   this is the first script I used for chart.js from a CDN-->
   <script src="./js/app.js"></script>
 </body>
 

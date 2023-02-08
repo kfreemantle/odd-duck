@@ -23,10 +23,15 @@ let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
 
 
+
+
 let matchupTotal = 0;
 const matchupAllowed = 25;
 
 let allProducts = [];
+
+let indexArray = [];
+// the indexArray is going to be used to keep track of our CURRENT selections in the product picking game.  the array will then be checked against before generating another set of images.  If the newly generated image set contains anything in the indexArray, we're going to generate the images again.
 
 
 
@@ -103,28 +108,23 @@ allProducts = [bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulh
 
 
 function renderProducts() {
-  let item1 = selectRandomProduct();
-    let item2 = selectRandomProduct();
-    let item3 = selectRandomProduct();
-    
-  // duplicate = true is a flag we set to start.  Later we use the checkForDuplicates function to check if the array contains any duplicates.  The while loop runs as long as duplicates strictly equals true.  Once it doesn't, we're out of the loop.
-  let duplicate = true;
-  let comparisonArray = [];
-
   
-  while ( duplicate === true ) {
-    let item1 = selectRandomProduct();
-    let item2 = selectRandomProduct();
-    let item3 = selectRandomProduct();
-    
-    comparisonArray = [item1, item2, item3];
-      duplicate = checkForDuplicates(comparisonArray);
-    
+while (indexArray.length < 6) {
+  let randomProducts = selectRandomProduct();  // we're using six here because we're containing enough to account for both the first set of images AND the second set of random images to compare.
+  
+  // here we're using the ! operator before our function call to say that we want to return TRUE if the function returns FALSE.  Think of it as a little daemon guy yelling HEY HEY! I WANT NOT THIS, OK?  
+  if (!indexArray.includes(randomProducts)) {
+    indexArray.push(randomProducts);
   }
-
-
+}
+let item1 = indexArray.shift();
+let item2 = indexArray.shift();
+let item3 = indexArray.shift();
 
   
+
+
+
 // once outside of the loop we render all the images to their respective img tags on the page, we increment up the views for each of those items, and increment up the matchupTotal variable.
 
 
@@ -157,13 +157,12 @@ function renderResults() {
 }
 
 
+
+
 // - event listener is looking for the click event.
 
 function handleProductClick(event) {
-  // From the Goat Tinder demo, we first want to see what image got clicked using the console.log function.  
-  console.log(event.target.alt); 
-
-  //  bind the click to the product, then use a for loop to find the product in the allProducts array.
+   //  bind the click to the product, then use a for loop to find the product in the allProducts array.
   let clickedProduct = event.target.alt;
   for (let i = 0; i < allProducts.length; i++) {
     if (allProducts[i].name === clickedProduct) {
@@ -175,12 +174,15 @@ if (matchupTotal < matchupAllowed) {
   renderProducts();
 } else { // if the game has hit the matchupAllowed limit, we remove the event listener for clicking the products, and enable ONLY the click listener for the results button.
 imgContainer.removeEventListener('click', handleProductClick);
-resultsButton.addEventListener('click', renderResults);
+// resultsButton.addEventListener('click', renderResults);
+// we're not adding an event listener here anymore, because we're going to automatically render the chart with our results after the game is complete.
 
+renderChart();
 
 }
 
 }
+
 
 
 // first iteration of the game is called here.
@@ -190,3 +192,104 @@ renderProducts();
 // event listener is added and ready for clicks.
 
 imgContainer.addEventListener('click', handleProductClick);
+
+
+
+function renderChart() {
+
+  // the chart will need the variables that we care about, and each will be stored in an array.
+
+  let productNames = [];
+  let productViews = [];
+  let productLikes = [];
+
+  // the for loop runs through the array of products after we've played the product picking game, and pushes the recorded values of name, views, and likes to three respective container arrays.  We're going to use these container arrays to render the chart data.
+
+  for (let i = 0; i < allProducts.length; i++) {
+    productNames.push(allProducts[i].name);
+    productViews.push(allProducts[i].views);
+    productLikes.push(allProducts[i].likes);
+
+  }
+
+  // here's where we do the chart.js work.  We start with a window into the dom
+
+  const ctx = document.getElementById('myChart');
+
+  let config = {
+    type: 'bar',
+    data: {
+      labels: productNames,
+      datasets: [
+      {
+        label: '# of Votes',
+        data: productLikes,
+        borderWidth: 1,
+        backgroundColor: [ 
+        'rgba(253, 187, 39, 0.5)',
+        'rgba(10, 249, 187, 0.9)',
+        'rgba(58, 241, 127, 0.6)',
+        'rgba(245, 70, 0, 0.2)',
+        'rgba(148, 105, 166, 0.5)',
+        'rgba(144, 76, 28, 0.2)'
+      ]
+      },
+      {
+        label: '# of Views',
+        data: productViews,
+        borderWidth: 1
+      }
+    ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+  
+new Chart(ctx, config);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Deprecated code, for me to help understand where I came from on this project.
+
+// Beginning of previous renderProducts logic
+
+  // let item1 = selectRandomProduct();
+  //   let item2 = selectRandomProduct();
+  //   let item3 = selectRandomProduct();
+    
+  // // duplicate = true is a flag we set to start.  Later we use the checkForDuplicates function to check if the array contains any duplicates.  The while loop runs as long as duplicates strictly equals true.  Once it doesn't, we're out of the loop.
+  // let duplicate = true;
+  // let comparisonArray = [];
+
+  
+  // while ( duplicate === true ) {
+  //   let item1 = selectRandomProduct();
+  //   let item2 = selectRandomProduct();
+  //   let item3 = selectRandomProduct();
+    
+  //   comparisonArray = [item1, item2, item3];
+  //     duplicate = checkForDuplicates(comparisonArray);
+    
+  // }
+
+// end of renderProducts logic
